@@ -1,0 +1,51 @@
+train_dir: "/data_dir/tumor-cifar/v1/train"
+train_label: "/data_dir/tumor-cifar/v1/train.csv"
+test_dir: "/data_dir/tumor-cifar/v1/test"
+test_label: "/data_dir/tumor-cifar/v1/test.csv"
+root_dir: "/working_dir"
+
+# Setup
+random_seed: 26
+val_fraction: 0.1
+checkpoint: null
+pretrained_mae: "/working_dir/models/tumor_cifar_mae/best_pretrain_model.pth"
+
+# Model Params
+patch_size: 8
+model_class: "ViT" # or TimeDistanceViT
+time_emb: "AbsTimeEncoding" # or PositionalEncoding
+pos_emb: "PatchPosition2D" # or LearnablePatchPosition
+embedding_dim: 256 # needs to be multiple of dim_head
+dim_head: 64 # dim of q,k,v,z
+depth: 8
+heads: 8
+mlp_dim: 2048
+qkv_bias: False
+dropout: 0.1
+
+# Decoder Params
+masking_ratio: 0.60
+decoder_dim: 256
+decoder_depth: 4
+
+# MAE Pretraining params
+# epochs: 1000
+# lr: 0.0003 # peak learning rate
+# schedule: "Cosine"
+# warmup_steps: 500
+# batch_size: 2700
+# val_interval: 5
+# checkpoint_interval: 20
+# stop_agg: 200
+# stop_delta: 0.01
+
+# Finetune params
+epochs: 1000
+lr: 0.0003 # peak learning rate
+schedule: "Cosine" # Cosine, Constant, WarmupConstant, Linear
+warmup_steps: 500
+batch_size: 630
+val_interval: 5
+checkpoint_interval: 20
+stop_agg: 200 # number of steps to aggregate stopping metric over
+stop_delta: 0.01 # max change in stopping metric before stopping

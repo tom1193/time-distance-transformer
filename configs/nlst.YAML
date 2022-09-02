@@ -1,0 +1,53 @@
+train_dir: "/data_dir/train/"
+pbb_dir: "/data_dir/pbb" # nodule ROI regions
+label: "/data_dir/nlst.csv"
+cv: "/data_dir/cv_folds.pickle" # dictionary of cross validation folds, where each entry is list of image paths in the hold-out fold
+root_dir: "/working_dir"
+
+# Setup
+random_seed: 1337
+val_fraction: 0.15
+checkpoint: null
+pretrained_mae: null
+dataset: "NLSTDatasetFromFeat" 
+# NLSTDataset: load whole scan
+# NLSTDatasetFromROI: load ROIs
+# NLSTDatasetFromFeat: load feature vectors
+topk: 5 # number of ROIs/feature vectors per scan
+
+# Model Params
+image_size: 256
+num_feat: 5
+feat_dim: 64
+model_class: "TimeAwareFeatViT"
+# time_emb: "AbsTimeEncoding" # time_embedding not used for time_aware
+# pos_emb: "LearnablePatchPosition" # position embedding not used for feature vectors
+embedding_dim: 64
+dim_head: 64
+depth: 8
+heads: 8
+mlp_dim: 256
+qkv_bias: False
+dropout: 0.1
+
+# MAE Pretraining params 
+# epochs: 1000
+# lr: 0.00001
+# schedule: "Cosine"
+# warmup_steps: 500
+# batch_size: 1000
+# val_interval: 5
+# checkpoint_interval: 20
+# stop_agg: 400
+# stop_delta: 0.01
+
+# Finetune params
+epochs: 1000
+lr: 0.00001 # peak learning rate
+schedule: "Cosine" # Cosine, Constant, WarmupConstant, Linear
+warmup_steps: 500
+batch_size: 1000
+val_interval: 5
+checkpoint_interval: 20
+stop_agg: 400 # number of steps to aggregate stopping metric over
+stop_delta: 0.01 # max change in stopping metric before stopping
