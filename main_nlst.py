@@ -19,7 +19,6 @@ from torch.utils.data.dataloader import default_collate # https://github.com/pyt
 from utils import seed_everything, load_config, EarlyStopper, get_cv_folds
 from datasets import NLSTDataset, NLSTDatasetFromFeat, NLSTDatasetFromROI
 from ViT3D import SimpleViT3D
-from FactorizedViT3D import FactorizedViT3D
 from TimeDistanceViT import TimeDistanceViT
 from FeatViT import FeatViT, TimeAwareFeatViT
 from MAE import MAE
@@ -38,7 +37,6 @@ from monai.transforms import (
 
 model_classes = {
     "ViT3D": SimpleViT3D,
-    "FactorizedViT3D": FactorizedViT3D,
     "TimeDistanceViT": TimeDistanceViT,
     "FeatViT": FeatViT,
     "TimeAwareFeatViT": TimeAwareFeatViT,
